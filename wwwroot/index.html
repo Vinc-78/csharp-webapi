@@ -9,17 +9,17 @@
     <h1>Lista delle attività</h1>
     <h3>Aggiungi</h3>
     <form action="javascript:void(0);" method="POST" onsubmit="addItem()">
-        <input type="text" id="add-name" placeholder="Nuova attività">
+        <input type="text" id="agg-nome" placeholder="Nuova attività">
         <input type="submit" value="Aggiungi">
     </form>
 
-    <div id="editForm">
+    <div id="formmenu">
         <h3>Modifica</h3>
         <form action="javascript:void(0);" onsubmit="updateItem()">
-            <input type="hidden" id="edit-id">
-            <input type="checkbox" id="edit-isComplete">
-            <input type="text" id="edit-name">
-            <input type="submit" value="Save">
+            <input type="hidden" id="modId">
+            <input type="checkbox" id="stato">
+            <input type="text" id="nome">
+            <input type="submit" value="Salva">
             <a onclick="closeInput()" aria-label="Close">&#10006;</a>
         </form>
     </div>
@@ -33,7 +33,7 @@
             <th></th>
             <th></th>
         </tr>
-        <tbody id="todos"></tbody>
+        <tbody id="attivitaInserite"></tbody>
     </table>
 
     <script src="\js\site.js" asp-append-version="true"></script>

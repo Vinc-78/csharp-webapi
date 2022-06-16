@@ -1,5 +1,5 @@
 ﻿const uri = 'api/SingolaAttivitas';
-let todos = [];
+let attivita = [];
 
 function getItems() {
     fetch(uri)
@@ -9,10 +9,10 @@ function getItems() {
 }
 
 function addItem() {
-    const addNameTextbox = document.getElementById('add-name');
+    const addNameTextbox = document.getElementById('agg-nome');
 
     const item = {
-        Nome: addNameTextbox.value.trim(),
+        nome: addNameTextbox.value.trim(),
         bCompletata: false
     };
 
@@ -40,21 +40,25 @@ function deleteItem(id) {
         .catch(error => console.error('Non riesco a cancellare', error));
 }
 
-function displayEditForm(id) {
-    const item = todos.find(item => item.id === id);
+function closeInput() {
+    document.getElementById('formmenu').style.display = 'none';
+}
 
-    document.getElementById('edit-name').value = item.Nome;
-    document.getElementById('edit-id').value = item.Id;
-    document.getElementById('edit-isComplete').checked = item.bCompletata;
-    document.getElementById('editForm').style.display = 'block';
+function displayEditForm(id) {
+    const item = attivita.find(item => item.id === id);
+
+    document.getElementById('nome').value = item.nome;
+    document.getElementById('modId').value = item.id;  
+    document.getElementById('stato').checked = item.bCompletata;
+    document.getElementById('formmenu').style.display = 'block';
 }
 
 function updateItem() {
-    const itemId = document.getElementById('edit-id').value;
+    const itemId = document.getElementById('modId').value;
     const item = {
         Id: parseInt(itemId, 10),
-        bCompletata: document.getElementById('edit-isComplete').checked,
-        Nome: document.getElementById('edit-name').value.trim()
+        bCompletata: document.getElementById('stato').checked,
+        nome: document.getElementById('nome').value.trim()
     };
 
     fetch(`${uri}/${itemId}`, {
@@ -73,18 +77,16 @@ function updateItem() {
     return false;
 }
 
-function closeInput() {
-    document.getElementById('editForm').style.display = 'none';
-}
+
 
 function _displayCount(itemCount) {
-    const name = (itemCount === 1) ? 'numero di attività' : 'attività';
+    const name = (itemCount === 0) ? 'nessuna attività' : 'attività';
 
     document.getElementById('counter').innerText = `${itemCount} ${name}`;
 }
 
 function _displayItems(data) {
-    const tBody = document.getElementById('todos');
+    const tBody = document.getElementById('attivitaInserite');
     tBody.innerHTML = '';
 
     _displayCount(data.length);
@@ -98,11 +100,11 @@ function _displayItems(data) {
         isCompleteCheckbox.checked = item.bCompletata;
 
         let editButton = button.cloneNode(false);
-        editButton.innerText = 'Edit';
+        editButton.innerText = 'Modifica';
         editButton.setAttribute('onclick', `displayEditForm(${item.id})`);
 
         let deleteButton = button.cloneNode(false);
-        deleteButton.innerText = 'Delete';
+        deleteButton.innerText = 'Cancella';
         deleteButton.setAttribute('onclick', `deleteItem(${item.id})`);
 
         let tr = tBody.insertRow();
@@ -111,7 +113,7 @@ function _displayItems(data) {
         td1.appendChild(isCompleteCheckbox);
 
         let td2 = tr.insertCell(1);
-        let textNode = document.createTextNode(item.Nome);
+        let textNode = document.createTextNode(item.nome);
         td2.appendChild(textNode);
 
         let td3 = tr.insertCell(2);
@@ -121,5 +123,5 @@ function _displayItems(data) {
         td4.appendChild(deleteButton);
     });
 
-    todos = data;
+    attivita = data;
 }
