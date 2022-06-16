@@ -18,16 +18,25 @@ namespace csharp_webapi.Controllers
         public SingolaAttivitasController(SingolaAttivitaContext context)
         {
             _context = context;
+            // *************** per aggiungere da Controller: ******************
+
+            //List<SingolaAttivita> listaAttività = new List<SingolaAttivita>();
+
+            //SingolaAttivita prima = new SingolaAttivita() { Nome = "primo da controller ", bCompletata = false };
+
+            //context.ListaAttivita.Add(prima);
+
+            //context.SaveChanges();
         }
 
         // GET: api/SingolaAttivitas
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SingolaAttivita>>> GetListaAttivita()
         {
-          if (_context.ListaAttivita == null)
-          {
-              return NotFound();
-          }
+            if (_context.ListaAttivita == null)
+            {
+                return NotFound();
+            }
             return await _context.ListaAttivita.ToListAsync();
         }
 
@@ -35,10 +44,10 @@ namespace csharp_webapi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<SingolaAttivita>> GetSingolaAttivita(long id)
         {
-          if (_context.ListaAttivita == null)
-          {
-              return NotFound();
-          }
+            if (_context.ListaAttivita == null)
+            {
+                return NotFound();
+            }
             var singolaAttivita = await _context.ListaAttivita.FindAsync(id);
 
             if (singolaAttivita == null)
@@ -85,10 +94,10 @@ namespace csharp_webapi.Controllers
         [HttpPost]
         public async Task<ActionResult<SingolaAttivita>> PostSingolaAttivita(SingolaAttivita singolaAttivita)
         {
-          if (_context.ListaAttivita == null)
-          {
-              return Problem("Entity set 'SingolaAttivitaContext.ListaAttivita'  is null.");
-          }
+            if (_context.ListaAttivita == null)
+            {
+                return Problem("Entity set 'SingolaAttivitaContext.ListaAttivita'  is null.");
+            }
             _context.ListaAttivita.Add(singolaAttivita);
             await _context.SaveChangesAsync();
 
